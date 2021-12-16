@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Formats
+class TimeFormat
   TIME_KEY = { 'year' => '%Y', 'month' => '%m', 'day' => '%d', 'hour' => '%H',
                'minute' => '%M', 'second' => '%S' }.freeze
 
@@ -10,7 +10,7 @@ class Formats
   end
 
   def result
-    "#{Time.now.strftime(time_by_format)}\n"
+    "#{Time.now.strftime(time_by_format)}"
   end
 
   def valid?
@@ -28,8 +28,6 @@ class Formats
   end
 
   def time_by_format
-    time = []
-    @params.each { |key| time << TIME_KEY[key] }
-    time.join('-')
+    @params.map { |key| TIME_KEY[key]  }.join('-')
   end
 end

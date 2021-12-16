@@ -6,22 +6,22 @@ class App
     if valid_path?(request) && !request_params(request).empty?
       time_response(request)
     else
-      response(404, "Invalid path or empty params\n")
+      build_response(404, "Invalid path or empty params\n")
     end
   end
 
   private
 
   def time_response(request)
-    time_format = Formats.new(request_params(request))
+    time_format = TimeFormat.new(request_params(request))
     if time_format.valid?
-      response(200, time_format.result)
+      build_response(200, time_format.result)
     else
-      response(400, "Unknown time format [#{time_format.call.join(',')}]\n")
+      build_response(400, "Unknown time format [#{time_format.call.join(',')}]\n")
     end
   end
 
-  def response(code, message)
+  def build_response(code, message)
     response = Rack::Response.new
     response.status = code
     response['Content-type'] = 'text/plain'
