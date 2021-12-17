@@ -10,15 +10,15 @@ class TimeFormat
   end
 
   def result
-    "#{Time.now.strftime(time_by_format)}"
+    Time.now.strftime(time_by_format).to_s
   end
 
-  def valid?
+  def invalid_format
+    "Unknown time format [#{@invalid_params.join(',')}]\n"
+  end
+
+  def success?
     @invalid_params.empty?
-  end
-
-  def call
-    @invalid_params
   end
 
   private
@@ -28,6 +28,6 @@ class TimeFormat
   end
 
   def time_by_format
-    @params.map { |key| TIME_KEY[key]  }.join('-')
+    @params.map { |key| TIME_KEY[key] }.join('-')
   end
 end
